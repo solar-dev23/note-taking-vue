@@ -1,49 +1,62 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="row justify-evenly">
+    <div class="column col-10 q-pa-md">
+      <div class="row justify-between items-center">
+        <p class="text-h6 q-ma-none">My Notes</p>
+        <q-btn color="primary" label="Add Note" @click="addNote" />
+      </div>
+      <note-list
+        :notes="notes"
+        @update-note="handleUpdate"
+        @remove-note="handleRemove"
+      ></note-list>
+    </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { defineComponent, ref } from 'vue';
+import { Note } from 'components/models';
+import NoteList from 'components/NoteList.vue';
+import { defineComponent, ref, watch } from 'vue';
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { ExampleComponent },
+  components: { NoteList },
   setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
+    const notes = ref<Note[]>(
+      JSON.parse(localStorage.getItem('notes') as string) || []
+    );
+
+    const addNote = () => {
+      const newId = parseInt(localStorage.getItem('id') as string) + 1 || 0;
+      notes.value.push({
+        id: newId,
+        content: '',
+      });
+      localStorage.setItem('id', String(newId));
+    };
+
+    const handleUpdate = (updated: Note) => {
+      notes.value = notes.value.map((note) =>
+        note.id === updated.id ? updated : note
+      );
+    };
+
+    const handleRemove = (id: number) => {
+      notes.value = notes.value.filter((note) => note.id !== id);
+    };
+
+    watch(
+      () => notes.value,
+      (newNotes) => {
+        localStorage.setItem('notes', JSON.stringify(newNotes));
       },
       {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
+        deep: true,
       }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
-    });
-    return { todos, meta };
-  }
+    );
+
+    return { notes, addNote, handleUpdate, handleRemove };
+  },
 });
 </script>
