@@ -1,6 +1,6 @@
 <template>
   <div class="row wrap">
-    <div v-for="note in notes" :key="note.id" class="col-3">
+    <div v-for="note in notes" :key="note.id" class="col-3" data-cy="note-item">
       <note-item
         :note="note"
         @update-note="updateNote"

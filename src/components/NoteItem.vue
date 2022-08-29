@@ -3,15 +3,19 @@
     <q-card-section>
       <div class="row items-center no-wrap">
         <div class="col">
-          <div class="text-h6">Note {{ note ? note.id + 1 : '' }}</div>
+          <div class="note-title text-h6" data-cy="note-title">
+            Note {{ note ? note.id + 1 : '' }}
+          </div>
         </div>
 
         <div class="col-auto">
-          <q-btn color="grey-7" round flat icon="more_vert">
+          <q-btn color="grey-7" round flat icon="more_vert" data-cy="open-menu">
             <q-menu cover auto-close>
               <q-list>
                 <q-item clickable>
-                  <q-item-section @click="confirmModal = true"
+                  <q-item-section
+                    @click="confirmModal = true"
+                    data-cy="remove-btn"
                     >Remove</q-item-section
                   >
                 </q-item>
@@ -31,23 +35,31 @@
         type="textarea"
         autofocus
         @keyup="handleUpdate"
+        data-cy="note-content"
       />
     </q-card-section>
   </q-card>
-  <q-dialog v-model="confirmModal" persistent>
+  <q-dialog v-model="confirmModal" persistent data-cy="confirm-dialog">
     <q-card>
       <q-card-section class="row items-center">
         <span class="q-ml-sm">Are you sure to remove this note?</span>
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="Cancel" color="primary" v-close-popup />
+        <q-btn
+          flat
+          label="Cancel"
+          color="primary"
+          v-close-popup
+          data-cy="cancel-btn"
+        />
         <q-btn
           flat
           label="Confirm"
           color="primary"
           v-close-popup
           @click="handleRemove"
+          data-cy="confirm-btn"
         />
       </q-card-actions>
     </q-card>

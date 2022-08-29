@@ -8,7 +8,20 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
+    "coverage": "vitest run --coverage",
+    "test:unit:ui": "majestic",
+    "test:unit": "jest --updateSnapshot",
+    "test:unit:ci": "jest --ci",
+    "test:unit:coverage": "jest --coverage",
+    "test:unit:watch": "jest --watch",
+    "test:unit:watchAll": "jest --watchAll",
+    "serve:test:coverage": "quasar serve test/jest/coverage/lcov-report/ --port 8788",
+    "concurrently:dev:jest": "concurrently \"quasar dev\" \"jest --watch\"",
+    "test:e2e": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress open\"",
+    "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run\"",
+    "test:component": "cross-env NODE_ENV=test cypress open-ct",
+    "test:component:ci": "cross-env NODE_ENV=test cypress run-ct"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -18,20 +31,27 @@
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
+    "@cypress/vue": "^4.1.0",
     "@quasar/app-webpack": "^3.0.0",
+    "@quasar/quasar-app-extension-testing": "^2.0.4",
     "@quasar/quasar-app-extension-testing-e2e-cypress": "^4.2.1",
     "@quasar/quasar-app-extension-testing-unit-jest": "^3.0.0-alpha.10",
     "@testing-library/vue": "^6.6.1",
     "@types/node": "^12.20.21",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
+    "@vitejs/plugin-vue": "^3.0.3",
+    "@vue/test-utils": "^2.0.2",
     "cypress": "^10.6.0",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-jest": "^25.2.2",
     "eslint-plugin-vue": "^9.0.0",
-    "prettier": "^2.5.1"
+    "jsdom": "^20.0.0",
+    "majestic": "^1.7.0",
+    "prettier": "^2.5.1",
+    "vitest": "^0.22.1"
   },
   "browserslist": [
     "last 10 Chrome versions",

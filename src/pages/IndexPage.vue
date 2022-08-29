@@ -3,12 +3,18 @@
     <div class="column col-10 q-pa-md">
       <div class="row justify-between items-center">
         <p class="text-h6 q-ma-none">My Notes</p>
-        <q-btn color="primary" label="Add Note" @click="addNote" />
+        <q-btn
+          color="primary"
+          label="Add Note"
+          @click="addNote"
+          data-cy="add-btn"
+        />
       </div>
       <note-list
         :notes="notes"
         @update-note="handleUpdate"
         @remove-note="handleRemove"
+        data-cy="note-list"
       ></note-list>
     </div>
   </q-page>
