@@ -2,6 +2,27 @@
 
 Note-taking application using VueJS
 
+## Prerequisites
+
+Make sure you have installed Quasar cli on your machine.
+
+https://quasar.dev/start/quasar-cli#installation-project-scaffolding
+
+```bash
+$ yarn global add @quasar/cli
+# or
+$ npm install -g @quasar/cli
+
+If you are using Yarn, make sure that the Yarn global install location is in your PATH:
+
+# in ~/.bashrc or equivalent
+export PATH="$(yarn global bin):$PATH"
+
+# for fish-shell:
+set -U fish_user_paths (yarn global bin) $fish_user_paths
+
+```
+
 ## Install the dependencies
 
 ```bash
